@@ -1,0 +1,7 @@
+WINDOE_WIDTH = 1000
+WINDOW_HEIGHT = 500
+BACKGROUND_GREEN = (0, 255, 64)
+SOLIDER_IMAGE = "pics/soldier2.png"
+FLAG_IMAGE = "pics/flag2.png"
+SLOT_SIZE = 20
+BUSH_IMAGE = "pics/bush.png"
