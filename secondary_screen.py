@@ -69,8 +69,6 @@ def show_mines_screen( matrix_mines, col, row): #צריך להוסיף קבלה 
     grid = set_matrix()
     pygame.display.flip()
     pygame.time.wait(1000)
-    pygame.quit()
-    sys.exit()
-    #לקרוא חזרה למסך בית
+
 
 
