@@ -3,84 +3,71 @@ import consts
 from pygame.locals import *
 import random
 
-import pygame
 
-# Define some colors
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
-WIDTH = 10
-HEIGHT = 10
-MARGIN = 2
-# set the array
-grid = []
-for row in range(25):
-    grid.append([])
-    for column in range(50):
-        grid[row].append(0)
-# Set row 1, cell 5 to one. (Remember rows and
-# column numbers start at zero.)
-grid[0][0] = 1
 
-pygame.init()
+def set_matrix():
+    grid = []
+    for row in range(25):
+        grid.append([])
+        for column in range(50):
+            grid[row].append(0)
+    return grid
 
-# Set the width and height of the screen [width, height]
-size = [1000, 500]
-screen = pygame.display.set_mode(size)
-# set the tittle of the game
-pygame.display.set_caption("My Array Game")
 
-# Loop until the user clicks the close button.
-done = False
-
-# Used to manage how fast the screen updates
-clock = pygame.time.Clock()
-
-# -------- Main Program Loop -----------
-# while not done:
-# --- Main event loop
-while not done:
-    for event in pygame.event.get():  # User did something
-        if event.type == pygame.QUIT:  # If user clicked close
-            done = True  # Flag that we are done so we exit this loop
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            # User clicks the mouse. Get the position
-            pos = pygame.mouse.get_pos()
-            # Change the x/y screen coordinates to grid coordinates
-            column = pos[0] // (WIDTH + MARGIN)
-            row = pos[1] // (HEIGHT + MARGIN)
-            # Set that location to one
-            grid[row][column] = 1
-            print("Click ", pos, "Grid coordinates: ", row, column)
-
-    # --- Game logic should go here
-
-    # --- Screen-clearing code goes here
-
-    # Here, we clear the screen to white. Don't put other drawing commands
-    # above this, or they will be erased with this command.
-
-    # If you want a background image, replace this clear with blit'ing the
-    # background image.
-    screen.fill(BLACK)
-
-    # --- Drawing code should go here
-    # Draw the grid
+def set_slots(screen2):
     for row in range(25):
         for column in range(50):
-            color = WHITE
-            if grid[row][column] == 1:
-                color = GREEN
-            pygame.draw.rect(screen,
+            color = consts.SECONDELY_BLACK
+            pygame.draw.rect(screen2,
                              color,
-                             [(MARGIN + WIDTH) * column + MARGIN,
-                              (MARGIN + HEIGHT) * row + MARGIN,
-                              WIDTH,
-                              HEIGHT])
+                             [(consts.SECONDELY_MARGIN + consts.SECONDELY_WIDTH) * column + consts.SECONDELY_MARGIN ,
+                              (consts.SECONDELY_MARGIN  + consts.SECONDELY_HEIGHT) * row + consts.SECONDELY_MARGIN ,
+                              consts.SECONDELY_WIDTH,
+                              consts.SECONDELY_HEIGHT])
 
-    # --- Go ahead and update the screen with what we've drawn.
+
+def save_mines(screen2, matrix_mines):
+    for i in range(20):
+        x = random.randint(0, 47)
+        y = random.randint(0, 22)
+        new_tuple = (y,x)
+        show_mines(screen2, x*(consts.SECONDELY_MARGIN + consts.SECONDELY_WIDTH), y*(consts.SECONDELY_MARGIN  + consts.SECONDELY_HEIGHT))
+        matrix_mines.append(new_tuple)
+    return matrix_mines
+
+def show_mines(screen2, x,y):
+    img = pygame.image.load(consts.MINES_IMAGE).convert()
+    img.set_colorkey(consts.BACKGROUND_GREEN)
+    screen2.blit(img, (x, y))
     pygame.display.flip()
 
-    # --- Limit to 60 frames per second
-    clock.tick(60)
+def show_dark_solider(screen2, x,y):
+    img = pygame.image.load(consts.SOLIDER_NIGHT_IMAGE).convert()
+    img.set_colorkey(consts.BACKGROUND_GREEN)
+    screen2.blit(img, (x*(consts.SECONDELY_MARGIN + consts.SECONDELY_WIDTH), y*(consts.SECONDELY_MARGIN  + consts.SECONDELY_HEIGHT)))
+    pygame.display.flip()
+
+
+def show_mines_screen(): #צריך להוסיף קבלה של המיקום של החייל
+    matrix_mines = []
+    pygame.init()
+    size = [1000, 500]
+    screen2 = pygame.display.set_mode(size)
+    pygame.display.set_caption("secondely screen")
+    screen2.fill(consts.SECONDELY_GREEN)
+    set_slots(screen2)
+    show_dark_solider(screen2, 0,0)
+    save_mines(screen2, matrix_mines)
+
+    grid = []
+    grid = set_matrix()
+
+
+    done = False
+    while not done:
+        for event in pygame.event.get():  # User did something
+            if event.type == pygame.QUIT:  # If user clicked close
+                done = True  # Flag that we are done so we exit this loop
+    pygame.display.flip()
+
+show_mines_screen()

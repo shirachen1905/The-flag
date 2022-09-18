@@ -27,3 +27,11 @@ def Place_bushes (screen):
         img.set_colorkey(consts.BACKGROUND_GREEN)
         screen.blit(img, (x, y))
         pygame.display.flip()
+
+def show_text(screen):
+    font1 = pygame.font.SysFont("Welcome to The Flag game:", 25)
+    img1 = font1.render("Welcome to The Flag game:", True, consts.WHITE)
+    screen.blit(img1, (40, 20))
+    font2 = pygame.font.SysFont("Have fun!", 25)
+    img2 = font2.render("Have fun!", True, consts.WHITE)
+    screen.blit(img2, (40, 40))

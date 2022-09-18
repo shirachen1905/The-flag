@@ -5,3 +5,13 @@ SOLIDER_IMAGE = "pics/soldier2.png"
 FLAG_IMAGE = "pics/flag2.png"
 SLOT_SIZE = 20
 BUSH_IMAGE = "pics/bush.png"
+
+
+SECONDELY_BLACK = (17, 17, 17)
+SECONDELY_GREEN = (0, 255, 64)
+SECONDELY_WIDTH = 18
+SECONDELY_HEIGHT = 18
+SECONDELY_MARGIN = 2
+WHITE = (255,255,255)
+MINES_IMAGE = "pics/mine.png"
+SOLIDER_NIGHT_IMAGE= "pics/soldier_nigth.png"
