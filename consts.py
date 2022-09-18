@@ -15,3 +15,5 @@ SECONDELY_MARGIN = 2
 WHITE = (255,255,255)
 MINES_IMAGE = "pics/mine.png"
 SOLIDER_NIGHT_IMAGE= "pics/soldier_nigth.png"
+INJURY_IMAGE = "pics/injury.png"
+EXPLOTION_IMAGE = "pics/explotion.png"
