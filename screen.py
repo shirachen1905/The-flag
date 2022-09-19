@@ -90,3 +90,9 @@ def explosion(screen, row, col):
     pygame.display.flip()
 
 
+def key_press_timer(key):
+    clock = pygame.time.get_ticks()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYUP and event.key == key:
+                return int(chr(key)), (pygame.time.get_ticks() - clock) // 1000

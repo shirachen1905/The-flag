@@ -2,9 +2,12 @@ import pygame
 import pandas as pd
 import csv
 import os
-import json
+
 
 DATA_BASE = 'dataBase.csv'
+df = pd.DataFrame(columns=['Solider_location', 'Bushes_locations', 'Mines_locations'],
+                      index=[1, 2, 3, 4, 5, 6, 7, 8, 9])
+
 
 def key_press_timer(key):
     clock = pygame.time.get_ticks()
@@ -13,36 +16,36 @@ def key_press_timer(key):
             if event.type == pygame.KEYUP and event.key == key:
                 return int(chr(key)), (pygame.time.get_ticks() - clock) // 1000
 
-def create_data_dict(data_dict):
-    return data_dict
 
-def init_data_base():
+def create_dict(key,index_list,matrix_bushes,matrix_mines):
+    data_dict1 = {}
+    data_dict1[key] = [index_list,matrix_bushes,matrix_mines]
+    return data_dict1
+
+"""לסדר את הפונקציה הזאת כי זה אותו דבר"""
+def init_dict(key,index_list,matrix_bushes,matrix_mines):
+    data_dict = create_dict(key, index_list, matrix_bushes, matrix_mines)
     if not os.path.exists(DATA_BASE):
-        df = pd.DataFrame()
-        df.to_csv(DATA_BASE, columns=['num_button','Solider_location','Bushes_locations','Mines_locations'], mode='w')
+        df.loc[key] = data_dict[key]
+        csv_data = df.to_csv()
+        print('\nCSV String:\n', csv_data)
 
-
-
-
-
-cols = []
-rows = []
-dict_save = {}
-file_name = "saved.csv"
-# i need to check this
-# df = pd.DataFrame.from_dict(dict_save)
-# df.to_csv (r'saved.csv', index = False, header=True)
-
-def init_Database(file_name):
-    if os.path.exists(file_name):
-        print("File exists") #should open it and add
-        file_reader(file_name)
     else:
-        print("File does not exist") #should create one
-        """
-        df = pd.DataFrame()
-        df.columns = ['num_button', 'Solider_location', 'Bushes_locations', 'Mines_locations']
-        csv_file= df.to_csv(file_name, mode='w')"""
+        df.loc[key] = data_dict[key]
+        csv_data = df.to_csv()
+        print('\nCSV String:\n', csv_data)
+
+def get_bushes(key):
+    return df.loc[key]['Bushes_locations']
+def get_mines(key):
+    return df.loc[key]['Mines_locations']
+def get_row(key):
+    return df.loc[key]['Solider_location'][0]
+def get_col(key):
+    return df.loc[key]['Solider_location'][1]
+"""
+
+
 
 init_Database(file_name)
 
@@ -70,3 +73,4 @@ def file_reader(file_name):
         # extracting each data row one by one
         for row in csvreader:
             rows.append(row)
+"""

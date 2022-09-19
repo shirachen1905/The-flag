@@ -69,10 +69,9 @@ def solider_move_down(screen1,index_list):
         screen.show_screen( matrix_bushes, row, col)
     return index_list
 
-def create_dict(key,index_list,matrix_bushes,matrix_mines):
-    data_dict = {}
-    data_dict[key] = [index_list,matrix_bushes,matrix_mines]
-    return data_dict
+
+
+
 
 index_list = [0,0]
 matrix_bushes = screen.set_screen()
@@ -86,12 +85,15 @@ while not finish:
             if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7,
                              pygame.K_8, pygame.K_9]:
                 key = Database.key_press_timer(event.key)
+                print(key)
                 if key[1] < 1:
-                    data_dict = create_dict(key[0], index_list, matrix_bushes, matrix_mines)
-                    Database.create_data_dict(data_dict)
-                    pass #פונקציה להוספת המילון
+                    Database.init_dict(key[0], index_list, matrix_bushes, matrix_mines)
                 else:
-                    pass #פונקציה לקבלת הנתונים ושמירתם
+                    matrix_bushes = Database.get_bushes(key)
+                    matrix_mines = Database.get_mines(key)
+                    index_list[0] = Database.get_row(key)
+                    index_list[1] = Database.get_col(key)
+                    screen.show_screen(matrix_bushes, index_list[0], index_list[1])
             elif event.key == pygame.K_RETURN:
                 secondary_screen.show_mines_screen(matrix_mines, index_list[1], index_list[0])
                 screen.show_screen( matrix_bushes, index_list[0], index_list[1])
@@ -115,3 +117,15 @@ pygame.quit()
 dict_data = { number: [index_list, matrix_bushes,matrix_mines]}
 dict_data[number]=  [index_list, matrix_bushes,matrix_mines]}
 """
+
+
+
+
+def get_key():
+    return key
+def get_index_list():
+    return index_list
+def get_matrix_bushes():
+    return matrix_bushes
+def get_matrix_mines():
+    return matrix_mines
