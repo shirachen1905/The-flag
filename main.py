@@ -5,6 +5,8 @@ import consts
 import pygame, sys
 import secondary_screen
 from pygame.locals import *
+import time
+import Database
 
 
 
@@ -40,7 +42,7 @@ def solider_move_right(screen1, index_list):
         index_list = solider.move_right(screen1, index_list[1], index_list[0])
         row = index_list[0]
         col = index_list[1]
-        screen.show_screen(screen1, matrix_bushes, row, col)
+        screen.show_screen( matrix_bushes, row, col)
     return index_list
 
 def solider_move_left(screen1,index_list):
@@ -48,7 +50,7 @@ def solider_move_left(screen1,index_list):
         index_list = solider.move_left(screen1, index_list[1], index_list[0])
         row = index_list[0]
         col = index_list[1]
-        screen.show_screen(screen1, matrix_bushes, row, col)
+        screen.show_screen( matrix_bushes, row, col)
     return index_list
 
 def solider_move_up(screen1,index_list):
@@ -56,7 +58,7 @@ def solider_move_up(screen1,index_list):
         index_list = solider.move_up(screen1, index_list[1], index_list[0])
         row = index_list[0]
         col = index_list[1]
-        screen.show_screen(screen1, matrix_bushes, row, col)
+        screen.show_screen( matrix_bushes, row, col)
     return index_list
 
 def solider_move_down(screen1,index_list):
@@ -64,10 +66,13 @@ def solider_move_down(screen1,index_list):
         index_list = solider.move_down(screen1, index_list[1], index_list[0])
         row = index_list[0]
         col = index_list[1]
-        screen.show_screen(screen1, matrix_bushes, row, col)
+        screen.show_screen( matrix_bushes, row, col)
     return index_list
 
-
+def create_dict(key,index_list,matrix_bushes,matrix_mines):
+    data_dict = {}
+    data_dict[key] = [index_list,matrix_bushes,matrix_mines]
+    return data_dict
 
 index_list = [0,0]
 matrix_bushes = screen.set_screen()
@@ -78,9 +83,18 @@ finish = False
 while not finish:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
+            if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7,
+                             pygame.K_8, pygame.K_9]:
+                key = Database.key_press_timer(event.key)
+                if key[1] < 1:
+                    data_dict = create_dict(key[0], index_list, matrix_bushes, matrix_mines)
+                    Database.create_data_dict(data_dict)
+                    pass #פונקציה להוספת המילון
+                else:
+                    pass #פונקציה לקבלת הנתונים ושמירתם
+            elif event.key == pygame.K_RETURN:
                 secondary_screen.show_mines_screen(matrix_mines, index_list[1], index_list[0])
-                screen.show_screen(screen1, matrix_bushes, index_list[0], index_list[1])
+                screen.show_screen( matrix_bushes, index_list[0], index_list[1])
             elif event.key == pygame.K_RIGHT:
                 index_list = solider_move_right(screen1, index_list)
             elif event.key == pygame.K_LEFT:
@@ -97,4 +111,7 @@ while not finish:
         if event.type == pygame.QUIT:
             finish = True
 pygame.quit()
-
+"""
+dict_data = { number: [index_list, matrix_bushes,matrix_mines]}
+dict_data[number]=  [index_list, matrix_bushes,matrix_mines]}
+"""

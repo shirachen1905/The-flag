@@ -13,7 +13,7 @@ def set_screen():
     Place_bushes(matrix_bushes)
     return matrix_bushes
 
-def show_screen(screen1, matrix_bushes, row, col):
+def show_screen( matrix_bushes, row, col):
     pygame.init()
     size = (consts.WINDOE_WIDTH, consts.WINDOW_HEIGHT)
     screen1 = pygame.display.set_mode(size)
@@ -88,3 +88,5 @@ def explosion(screen, row, col):
     img2.set_colorkey(consts.BACKGROUND_GREEN)
     screen.blit(img2, (col * consts.SLOT_SIZE, (row+3) * consts.SLOT_SIZE))
     pygame.display.flip()
+
+
