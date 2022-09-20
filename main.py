@@ -1,12 +1,10 @@
 import screen
 import solider
-import MineField
 import consts
 import pygame, sys
 import secondary_screen
-from pygame.locals import *
-import time
 import Database
+import ast
 
 
 
@@ -87,13 +85,14 @@ while not finish:
                 key = Database.key_press_timer(event.key)
                 print(key)
                 if key[1] < 1:
-                    Database.init_dict(key[0], index_list, matrix_bushes, matrix_mines)
+                    Database.init_data(key[0], index_list, matrix_bushes, matrix_mines)
                 else:
-                    matrix_bushes = Database.get_bushes(key)
-                    matrix_mines = Database.get_mines(key)
-                    index_list[0] = Database.get_row(key)
-                    index_list[1] = Database.get_col(key)
-                    screen.show_screen(matrix_bushes, index_list[0], index_list[1])
+                    if Database.get_data(key) != False:
+                        row = Database.get_data(key)
+                        matrix_bushes = ast.literal_eval(row[2])
+                        matrix_mines = ast.literal_eval(row[3])
+                        index_list = ast.literal_eval(row[1])
+                        screen.show_screen(matrix_bushes, index_list[0], index_list[1])
             elif event.key == pygame.K_RETURN:
                 secondary_screen.show_mines_screen(matrix_mines, index_list[1], index_list[0])
                 screen.show_screen( matrix_bushes, index_list[0], index_list[1])
@@ -113,19 +112,3 @@ while not finish:
         if event.type == pygame.QUIT:
             finish = True
 pygame.quit()
-"""
-dict_data = { number: [index_list, matrix_bushes,matrix_mines]}
-dict_data[number]=  [index_list, matrix_bushes,matrix_mines]}
-"""
-
-
-
-
-def get_key():
-    return key
-def get_index_list():
-    return index_list
-def get_matrix_bushes():
-    return matrix_bushes
-def get_matrix_mines():
-    return matrix_mines
